@@ -20,7 +20,7 @@ from aiogram.types import (
 # ----------------------------------------------------
 # НАСТРОЙКИ
 # ----------------------------------------------------
-BOT_TOKEN = "8835043120:AAGSU7ZPkm2e30xMoZ1am-zE5qv9EXnwUGk"
+BOT_TOKEN = "8835043120:AAEk1W5aZH6P8XYRVBTmzCBoDBLPffBWwks"
 ADMIN_ID = int(os.getenv("ADMIN_ID", 8099579471))
 CHANNEL_ID = "@ResaleFlowersru"
 BOT_USERNAME = "ResaleFlowers_ru_bot"
