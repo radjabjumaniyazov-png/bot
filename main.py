@@ -577,9 +577,30 @@ async def process_sold(callback: CallbackQuery):
 # ----------------------------------------------------
 # ЗАПУСК БОТА
 # ----------------------------------------------------
+import os
+from aiohttp import web
+
+# Простейший веб-сервер для Render, чтобы он видел открытый порт
+async def handle(request):
+    return web.Response(text="Bot is running!")
+
+app = web.Application()
+app.router.add_get("/", handle)
+
+async def web_server():
+    runner = web.AppRunner(app)
+    await runner.setup()
+    port = int(os.environ.get("PORT", 10000))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+
+# --- ЗАПУСК БОТА И СЕРВЕРА ---
 async def main():
+    # Запускаем веб-сервер в фоне
+    await web_server()
+    # Запускаем polling бота
     await dp.start_polling(bot)
 
-
 if __name__ == "__main__":
+    import asyncio
     asyncio.run(main())
