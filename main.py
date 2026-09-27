@@ -597,10 +597,15 @@ async def web_server():
 # --- ЗАПУСК БОТА И СЕРВЕРА ПАРАЛЛЕЛЬНО ---
 async def main():
     # Запускаем polling бота и веб-сервер одновременно
-    await asyncio.gather(
-        web_server(),
-        dp.start_polling(bot)
-    )
+    while True:
+        try:
+            await asyncio.gather(
+                web_server(),
+                dp.start_polling(bot, handle_signals=False)
+            )
+        except Exception as e:
+            print(f"Ошибка в работе бота: {e}, перезапуск через 3 секунды...")
+            await asyncio.sleep(3)
 
 if __name__ == "__main__":
     asyncio.run(main())
