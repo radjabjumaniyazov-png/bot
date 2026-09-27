@@ -594,13 +594,13 @@ async def web_server():
     site = web.TCPSite(runner, "0.0.0.0", port)
     await site.start()
 
-# --- ЗАПУСК БОТА И СЕРВЕРА ---
+# --- ЗАПУСК БОТА И СЕРВЕРА ПАРАЛЛЕЛЬНО ---
 async def main():
-    # Запускаем веб-сервер в фоне
-    await web_server()
-    # Запускаем polling бота
-    await dp.start_polling(bot)
+    # Запускаем polling бота и веб-сервер одновременно
+    await asyncio.gather(
+        web_server(),
+        dp.start_polling(bot)
+    )
 
-if __name__ == "__main__":
-    import asyncio
+if name == "main":
     asyncio.run(main())
